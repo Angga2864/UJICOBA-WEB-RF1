@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jadwal Kereta Daop 6 Yogyakarta</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <style>
+      /* Styling tambahan */
+      .autocomplete-suggestions {
+        border: 1px solid #ddd;
+        max-height: 150px;
+        overflow-y: auto;
+        position: absolute;
+        background: white;
+        width: 100%;
+        z-index: 1000;
+        border-radius: 4px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .autocomplete-suggestions div {
+        padding: 10px;
+        cursor: pointer;
+      }
+
+      .autocomplete-suggestions div:hover {
+        background-color: #fffea5;
+      }
+
+      .search-container {
+        position: relative;
+      }
+
+      #clock {
+        font-size: 15px;
+        font-weight: bold;
+        background-color: #0c532a;
+        color: #fffea5;
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        display: inline-block;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        display: block;
+        white-space: nowrap; /* Mencegah tabel terlalu lebar */
+      }
+
+      th,
+      td {
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #0c532a;
+        color: #fffea5;
+        font-weight: bold;
+      }
+
+      tr:nth-child(even) {
+        background-color: #9ae587;
+      }
+
+      tr:nth-child(odd) {
+        background-color: #fffeaa;
+      }
+
+      tr:hover {
+        background-color: #ffde24;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      td a {
+        text-decoration: none;
+        color: #0364f5;
+        font-weight: bold;
+      }
+
+      td a:hover {
+        text-decoration: underline;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-image: url("sepur.jpg");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-color: #ffffff;
+        text-align: center;
+        padding: 20px;
+        max-width: 100%;
+        overflow-x: hidden;
+      }
+      header {
+        background-color: #0c532a;
+        color: white;
+        padding: 15px;
+        border-radius: 8px;
+      }
+      /* Responsif untuk header */
+      header h1 {
+        font-size: 24px;
+        text-align: center;
+      }
+
+      header h2 {
+        font-size: 18px;
+        text-align: center;
+      }
+
+      .search-container {
+        margin: 20px auto;
+        max-width: 400px;
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+        width: 100%;
+      }
+      #resultContainer {
+        overflow-x: auto;
+      }
+      input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #fffea5;
+        border-radius: 4px;
+        font-size: 13px;
+      }
+      button {
+        background-color: #fffea5;
+        color: #0c532a;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        border-radius: 4px;
+        font-size: 16px;
+      }
+      button:hover {
+        background-color: hsl(54, 72%, 72%);
+      }
+      #resultContainer {
+        margin-top: 20px;
+        text-align: left;
+        max-width: 60%;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        background: rgb(218, 218, 218);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      }
+      .search-container input,
+      .search-container button {
+        width: 100%;
+        font-size: 14px;
+      }
+      /* Media queries untuk layar kecil (ponsel) */
+      @media screen and (max-width: 768px) {
+        header h1 {
+          font-size: 18px;
+        }
+
+        header h2 {
+          font-size: 14px;
+        }
+
+        #clock {
+          font-size: 12px;
+          padding: 5px;
+        }
+
+        th,
+        td {
+          padding: 8px;
+          font-size: 12px;
+        }
+
+        footer {
+          font-size: 12px;
+          padding: 10px;
+        }
+      }
+      footer {
+        background-color: #0c532a;
+        color: white;
+        text-align: center;
+        padding: 15px 10px;
+        margin-top: 30px;
+        font-size: 14px;
+        border-radius: 8px;
+        box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .footer-container a {
+        color: #ffdd57;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .footer-container a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Selamat Datang di Mesin Pencari Jadwal Kereta Api Daop 6 Yogyakarta</h1>
+      <h2>Salam Railfans Indonesia</h2>
+    </header>
+    <br />
+    <!-- Tambahan elemen jam -->
+    <div id="clock"></div>
+
+    <div class="search-container">
+      <input type="text" id="stationInput" placeholder="Masukkan Nama atau Kode Stasiun..." onkeyup="showSuggestions()" />
+      <div id="autocomplete-results" class="autocomplete-suggestions"></div>
+      <button onclick="searchSchedule()">Cari</button>
+    </div>
+
+    <div id="resultContainer"></div>
+
+    <footer>
+      <div class="footer-container">
+        <p>Terima kasih telah menggunakan layanan pencarian jadwal kereta Daop 6 Yogyakarta.</p>
+        <p>Website ini sedang dalam tahap pengembangan.</p>
+        <p>Jika memiliki kritik atau saran, jangan ragu untuk menghubungi kami.</p>
+        <p>Follow me on Instagram: <a href="https://www.instagram.com/angga.2864_/" target="_blank">@angga.2864_</a></p>
+        <p>&copy; 2025 Didan Angga Pratama. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      const stations = [
+        { code: "YK", name: "Yogyakarta" },
+        { code: "LPN", name: "Lempuyangan" },
+        { code: "MGW", name: "Maguwo" },
+        { code: "BBN", name: "Brambanan" },
+        { code: "SWT", name: "Srowot" },
+        { code: "KT", name: "Klaten" },
+        { code: "CE", name: "Ceper" },
+        { code: "DL", name: "Delanggu" },
+        { code: "GW", name: "Gawok" },
+        { code: "PWS", name: "Purwosari" },
+        { code: "SLO", name: "Solo Balapan" },
+        { code: "SK", name: "Solo Jebres" },
+        { code: "KDO", name: "Kadipiro" },
+        { code: "SLM", name: "Salem" },
+        { code: "SUM", name: "Sumberlawang" },
+        { code: "GPK", name: "Goprak" },
+        { code: "KO", name: "Kalioso" },
+      ];
+
+      const trainSchedule = [
+        { nomor_ka: "5", nama: "Argo Semeru", relasi: "Surabaya Gubeng - Gambir", jadwal: { YK: "12:51", LPN: "12:48", KT: "12:32", PWS: "12:15", SLO: "12:08", SK: "12:04" } },
+        { nomor_ka: "6", nama: "Argo Semeru", relasi: "Gambir - Surabaya Gubeng", jadwal: { YK: "12:45", LPN: "12:50", KT: "13:09", PWS: "13:26", SLO: "13:30", SK: "13:37" } },
+        { nomor_ka: "7", nama: "Bima", relasi: "Surabaya Gubeng - Gambir", jadwal: { YK: "23:06", LPN: "23:02", KT: "22:46", PWS: "22:30", SLO: "22:23", SK: "22:19" } },
+        { nomor_ka: "8", nama: "Bima", relasi: "Gambir - Surabaya Gubeng", jadwal: { YK: "23:25", LPN: "23:33", KT: "23:50", PWS: "00:06", SLO: "00:10", SK: "00:17" } },
+        { nomor_ka: "9", nama: "Argo Wilis", relasi: "Surabaya Gubeng - Bandung", jadwal: { YK: "12:10", LPN: "12:06", KT: "11:50", PWS: "11:34", SLO: "11:27", SK: "11:23" } },
+        { nomor_ka: "10", nama: "Argo Wilis", relasi: "Bandung - Surabaya Gubeng", jadwal: { YK: "13:24", LPN: "13:30", KT: "13:46", PWS: "14:03", SLO: "14:07", SK: "14:14" } },
+        { nomor_ka: "11", nama: "Turangga", relasi: "Surabaya Gubeng - Bandung", jadwal: { YK: "23:45", LPN: "23:41", KT: "23:25", PWS: "23:09", SLO: "23:02", SK: "22:58" } },
+        { nomor_ka: "12", nama: "Turangga", relasi: "Bandung - Surabaya Gubeng", jadwal: { YK: "23:42", LPN: "23:50", KT: "00:07", PWS: "00:24", SLO: "00:28", SK: "00:35" } },
+        { nomor_ka: "13", nama: "Argo Lawu", relasi: "Solo Balapan - Gambir", jadwal: { YK: "09:15", LPN: "09:11", KT: "08:52", PWS: "08:34", SLO: "08:30" } },
+        { nomor_ka: "14", nama: "Argo Lawu", relasi: "Gambir - Solo Balapan", jadwal: { YK: "02:47", LPN: "02:55", KT: "03:13", PWS: "03:35", SLO: "03:40" } },
+      ];
+
+      // Mapping link Wikipedia untuk masing-masing kereta
+      const trainLinks = {
+        "Argo Semeru": "https://id.wikipedia.org/wiki/Kereta_api_Argo_Semeru",
+        Bima: "https://id.wikipedia.org/wiki/Kereta_api_Bima",
+        "Argo Wilis": "https://id.wikipedia.org/wiki/Kereta_api_Argo_Wilis",
+        Turangga: "https://id.wikipedia.org/wiki/Kereta_api_Turangga",
+        "Argo Lawu": "https://keretaapikita.com/jadwal-kereta-api-argo-lawu/",
+      };
+
+      function showSuggestions() {
+        const input = document.getElementById("stationInput").value.toLowerCase();
+        const suggestions = document.getElementById("autocomplete-results");
+
+        if (!input) {
+          suggestions.innerHTML = "";
+          return;
+        }
+
+        let matches = stations.filter((station) => station.code.toLowerCase().includes(input) || station.name.toLowerCase().includes(input));
+
+        suggestions.innerHTML = matches.map((station) => `<div onclick="selectStation('${station.code}', '${station.name}')">${station.name} (${station.code})</div>`).join("");
+      }
+
+      function selectStation(code, name) {
+        document.getElementById("stationInput").value = name; // Tetap tampilkan nama
+        document.getElementById("stationInput").dataset.code = code; // Simpan kode sebagai atribut data
+        document.getElementById("autocomplete-results").innerHTML = "";
+      }
+
+      function convertToMinutes(time) {
+        let [hours, minutes] = time.split(":").map(Number);
+        return hours * 60 + minutes;
+      }
+
+      function searchSchedule() {
+        const inputText = document.getElementById("stationInput").value.trim().toLowerCase();
+        const resultContainer = document.getElementById("resultContainer");
+        resultContainer.innerHTML = "";
+
+        // Mencari kode stasiun berdasarkan nama yang diinput pengguna
+        const station = stations.find((st) => st.name.toLowerCase() === inputText || st.code.toLowerCase() === inputText);
+
+        if (!station) {
+          resultContainer.innerHTML = "<p style='color: red;'>Stasiun tidak ditemukan.</p>";
+          return;
+        }
+
+        const stationCode = station.code; // Gunakan kode stasiun untuk pencarian
+
+        // Filter kereta berdasarkan keberadaan jadwal di kode stasiun yang benar
+        const filteredTrains = trainSchedule
+          .filter((train) => train.jadwal[stationCode])
+          .map((train) => ({
+            nomor_ka: train.nomor_ka,
+            nama: train.nama,
+            relasi: train.relasi,
+            waktu: train.jadwal[stationCode],
+            link: trainLinks[train.nama] || "#",
+          }));
+
+        if (filteredTrains.length === 0) {
+          resultContainer.innerHTML = "<p style='color: red;'>ⓘ SABAR SEK, DATANE RUNG TAK INPUT LUR 😭</p>";
+          return;
+        }
+
+        // **Mengurutkan berdasarkan waktu kedatangan (paling awal ke paling malam)**
+        filteredTrains.sort((a, b) => convertToMinutes(a.waktu) - convertToMinutes(b.waktu));
+
+        let tableHTML = `
+    <table>
+        <thead>
+            <tr>
+                <th>Nomor KA</th>
+                <th>Nama Kereta</th>
+                <th>Relasi</th>
+                <th>Waktu Kedatangan</th>
+                <th>Info</th>
+            </tr>
+        </thead>
+        <tbody>
+    `;
+
+        filteredTrains.forEach((train) => {
+          tableHTML += `
+        <tr>
+            <td>${train.nomor_ka}</td>
+            <td>${train.nama}</td>
+            <td>${train.relasi}</td>
+            <td>${train.waktu}</td>
+            <td><a href="${train.link}" target="_blank">Detail</a></td>
+        </tr>
+        `;
+        });
+
+        tableHTML += "</tbody></table>";
+        resultContainer.innerHTML = tableHTML;
+      }
+
+      // Fungsi untuk mengubah waktu "HH:mm" menjadi total menit sejak 00:00
+      function convertToMinutes(time) {
+        const [hours, minutes] = time.split(":").map(Number);
+        return hours * 60 + minutes;
+      }
+
+      function updateClock() {
+        const now = new Date();
+
+        // Konversi waktu ke WIB (GMT+7)
+        const options = {
+          timeZone: "Asia/Jakarta",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+          weekday: "long",
+        };
+        const formatter = new Intl.DateTimeFormat("id-ID", options);
+        const formattedDate = formatter.format(now);
+
+        document.getElementById("clock").innerHTML = formattedDate;
+      }
+
+      setInterval(updateClock, 1000); // Update setiap detik
+      updateClock(); // Panggil sekali saat halaman dimuat
+    </script>
+  </body>
+</html>
